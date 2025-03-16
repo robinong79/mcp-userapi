@@ -11,6 +11,9 @@
   - [x] Login endpoint
   - [x] List Users endpoint
   - [x] Create User endpoint
+  - [x] Get User by ID endpoint
+  - [x] Update User endpoint
+  - [x] Delete User endpoint
 - [ ] Implement Resources
 - [ ] Implement Prompts
 - [ ] Add transport layer
@@ -18,7 +21,7 @@
 - [ ] Add testing
 
 ## Documentation
-- [ ] Add README.md
+- [x] Add README.md
 - [ ] Add API documentation
 - [ ] Add usage examples
 

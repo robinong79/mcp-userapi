@@ -132,4 +132,113 @@ export function addAuthTools(server: McpServer) {
       }
     }
   );
+
+  // Get user by ID tool
+  server.tool(
+    "get-user",
+    {
+      user_id: z.string(),
+      access_token: z.string()
+    },
+    async ({ user_id, access_token }) => {
+      try {
+        const response = await fetch(`http://127.0.0.1:5000/api/auth/users/${user_id}`, {
+          headers: {
+            'Authorization': `Bearer ${access_token}`
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to get user: ${response.statusText}`);
+        }
+
+        const user = await response.json();
+        return {
+          content: [{ 
+            type: "text" as const, 
+            text: JSON.stringify(user, null, 2)
+          }]
+        };
+      } catch (error: unknown) {
+        return handleError(error);
+      }
+    }
+  );
+
+  // Update user tool
+  server.tool(
+    "update-user",
+    {
+      user_id: z.string(),
+      access_token: z.string(),
+      email: z.string().email().optional(),
+      password: z.string().min(8).optional(),
+      role: z.enum(["admin"]).optional()
+    },
+    async ({ user_id, access_token, email, password, role }) => {
+      try {
+        // Build update body with only provided fields
+        const updateData: Record<string, any> = {};
+        if (email) updateData.email = email;
+        if (password) updateData.password = password;
+        if (role) updateData.role = role;
+
+        const response = await fetch(`http://127.0.0.1:5000/api/auth/users/${user_id}`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${access_token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(updateData)
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to update user: ${response.statusText}`);
+        }
+
+        const user = await response.json();
+        return {
+          content: [{ 
+            type: "text" as const, 
+            text: JSON.stringify(user, null, 2)
+          }]
+        };
+      } catch (error: unknown) {
+        return handleError(error);
+      }
+    }
+  );
+
+  // Delete user tool
+  server.tool(
+    "delete-user",
+    {
+      user_id: z.string(),
+      access_token: z.string()
+    },
+    async ({ user_id, access_token }) => {
+      try {
+        const response = await fetch(`http://127.0.0.1:5000/api/auth/users/${user_id}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${access_token}`
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to delete user: ${response.statusText}`);
+        }
+
+        const result = await response.json();
+        return {
+          content: [{ 
+            type: "text" as const, 
+            text: JSON.stringify(result, null, 2)
+          }]
+        };
+      } catch (error: unknown) {
+        return handleError(error);
+      }
+    }
+  );
 } 
