@@ -8,6 +8,7 @@ This project implements an MCP server that exposes user management operations as
 
 - User authentication (login)
 - User management (create, read, update, delete)
+- Property management (list, read, create, update, delete)
 - Access token management
 
 ## Installation
@@ -92,6 +93,56 @@ This server provides the following tools for user management:
   });
   ```
 
+### Property Management
+
+- **list-properties**: Retrieve all properties
+  ```typescript
+  const result = await client.callTool("list-properties", {
+    access_token: "your_access_token"
+  });
+  ```
+
+- **get-property**: Get a property by ID
+  ```typescript
+  const result = await client.callTool("get-property", {
+    property_id: "12345678-1234-5678-1234-567812345678",
+    access_token: "your_access_token"
+  });
+  ```
+
+- **create-property**: Create a new property
+  ```typescript
+  const result = await client.callTool("create-property", {
+    name: "Luxury Apartment",
+    address: "123 Main St, City, Country",
+    description: "A beautiful apartment with a view",
+    price: 250000,
+    bedrooms: 3,
+    bathrooms: 2,
+    size: 1200,
+    available: true,
+    access_token: "your_access_token"
+  });
+  ```
+
+- **update-property**: Update a property's information
+  ```typescript
+  const result = await client.callTool("update-property", {
+    property_id: "12345678-1234-5678-1234-567812345678",
+    price: 260000, // Only fields that need updating
+    available: false,
+    access_token: "your_access_token"
+  });
+  ```
+
+- **delete-property**: Delete a property
+  ```typescript
+  const result = await client.callTool("delete-property", {
+    property_id: "12345678-1234-5678-1234-567812345678",
+    access_token: "your_access_token"
+  });
+  ```
+
 ## API Specification
 
 The server follows the OpenAPI specification defined in `.cursor/apispec.json`. Key endpoints include:
@@ -102,6 +153,11 @@ The server follows the OpenAPI specification defined in `.cursor/apispec.json`. 
 - `GET /api/auth/users/{user_id}`: Get a user by ID
 - `PUT /api/auth/users/{user_id}`: Update a user
 - `DELETE /api/auth/users/{user_id}`: Delete a user
+- `GET /api/properties`: List all properties
+- `GET /api/properties/{property_id}`: Get a property by ID
+- `POST /api/properties`: Create a new property
+- `PUT /api/properties/{property_id}`: Update a property
+- `DELETE /api/properties/{property_id}`: Delete a property
 
 ## Environment Setup
 
