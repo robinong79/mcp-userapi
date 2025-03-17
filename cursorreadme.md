@@ -14,6 +14,12 @@
   - [x] Get User by ID endpoint
   - [x] Update User endpoint
   - [x] Delete User endpoint
+- [ ] Implement Property Management Tools
+  - [x] List Properties endpoint
+  - [ ] Get Property by ID endpoint
+  - [ ] Create Property endpoint
+  - [ ] Update Property endpoint
+  - [ ] Delete Property endpoint
 - [ ] Implement Resources
 - [ ] Implement Prompts
 - [ ] Add transport layer
@@ -40,4 +46,8 @@ const newUserResult = await server.tools.createUser({
   email: "newuser@example.com",
   password: "securepassword123",
   role: "admin"
+}); 
+
+const propertiesResult = await server.tools.listProperties({
+  access_token: "your_access_token_here"
 }); 

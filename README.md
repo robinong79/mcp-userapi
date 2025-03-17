@@ -8,6 +8,7 @@ This project implements an MCP server that exposes user management operations as
 
 - User authentication (login)
 - User management (create, read, update, delete)
+- Property management (list, read, create, update, delete)
 - Access token management
 
 ## Installation
@@ -92,6 +93,15 @@ This server provides the following tools for user management:
   });
   ```
 
+### Property Management
+
+- **list-properties**: Retrieve all properties
+  ```typescript
+  const result = await client.callTool("list-properties", {
+    access_token: "your_access_token"
+  });
+  ```
+
 ## API Specification
 
 The server follows the OpenAPI specification defined in `.cursor/apispec.json`. Key endpoints include:
@@ -102,6 +112,7 @@ The server follows the OpenAPI specification defined in `.cursor/apispec.json`. 
 - `GET /api/auth/users/{user_id}`: Get a user by ID
 - `PUT /api/auth/users/{user_id}`: Update a user
 - `DELETE /api/auth/users/{user_id}`: Delete a user
+- `GET /api/properties`: List all properties
 
 ## Environment Setup
 
